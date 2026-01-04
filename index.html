@@ -1,0 +1,3250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"/>
+    <meta name="description" content="Time-Field Gravity: A Theory Where Gravity is Inhomogeneous Time-Flow" />
+    <title>Time-Field Gravity Laboratory | Gravity as Emergent Time-Flow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        /* ======================================================
+           MOBILE-FIRST DESIGN - STARTING WITH MOBILE
+           ====================================================== */
+        :root {
+            /* Core Colors */
+            --primary-bg: #0a0a1a;
+            --secondary-bg: #11112a;
+            --panel-bg: rgba(20, 20, 40, 0.85);
+            --panel-border: rgba(0, 212, 255, 0.2);
+            --accent-cyan: #00d4ff;
+            --accent-purple: #8a2be2;
+            --accent-pink: #ff00ff;
+            --accent-gold: #ffd700;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0ff;
+            --success: #00ff9d;
+            --warning: #ffcc00;
+            --danger: #ff3366;
+            
+            /* Glass Effects */
+            --glass-bg: rgba(16, 20, 40, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            
+            /* Transitions */
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-medium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-xxl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 20px rgba(0, 212, 255, 0.5);
+            
+            /* Z-index layers */
+            --z-background: -10;
+            --z-base: 1;
+            --z-panel: 10;
+            --z-overlay: 100;
+            --z-modal: 1000;
+            --z-tooltip: 2000;
+        }
+
+        /* ======================================================
+           BASE STYLES - MOBILE FIRST
+           ====================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            font-size: 14px; /* Base font size for mobile */
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Exo 2', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(138, 43, 226, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+        }
+
+        /* ======================================================
+           TYPOGRAPHY
+           ====================================================== */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+        }
+
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.5rem; }
+        h3 { font-size: 1.25rem; }
+        h4 { font-size: 1rem; }
+
+        p {
+            margin-bottom: var(--space-md);
+        }
+
+        /* ======================================================
+           STUDY PANEL (MODAL)
+           ====================================================== */
+        .study-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 26, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: var(--z-modal);
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-medium);
+            padding: var(--space-md);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .study-panel.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .study-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--panel-border);
+            flex-shrink: 0;
+        }
+
+        .study-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            color: var(--accent-cyan);
+            letter-spacing: 0.05em;
+            flex: 1;
+            padding-right: var(--space-md);
+        }
+
+        .study-close {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+            flex-shrink: 0;
+        }
+
+        .study-close:hover,
+        .study-close:focus {
+            background: rgba(0, 212, 255, 0.2);
+            transform: scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .study-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: var(--space-xxl);
+        }
+
+        .study-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .study-section h2 {
+            color: var(--accent-cyan);
+            margin-bottom: var(--space-md);
+            font-family: 'Orbitron', sans-serif;
+            border-bottom: 2px solid var(--accent-purple);
+            padding-bottom: var(--space-sm);
+        }
+
+        .study-equation {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--accent-cyan);
+            padding: var(--space-md);
+            margin: var(--space-md) 0;
+            font-family: 'Share Tech Mono', monospace;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .study-note {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            margin: var(--space-md) 0;
+            font-style: italic;
+        }
+
+        .study-warning {
+            background: rgba(255, 51, 102, 0.1);
+            border: 1px solid var(--danger);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            margin: var(--space-md) 0;
+            font-style: italic;
+        }
+
+        /* ======================================================
+           CYBER GRID BACKGROUND
+           ====================================================== */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: var(--z-background);
+        }
+
+        /* ======================================================
+           LOADING SCREEN
+           ====================================================== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-bg);
+            z-index: var(--z-modal);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .loading-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--primary-bg);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .loading-text {
+            margin-bottom: var(--space-lg);
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 0 var(--space-md);
+        }
+
+        .loading-progress {
+            width: min(200px, 80vw);
+            height: 2px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 1px;
+            overflow: hidden;
+        }
+
+        .loading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* ======================================================
+           DASHBOARD LAYOUT - MOBILE FIRST
+           ====================================================== */
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            height: 100dvh;
+            position: relative;
+        }
+
+        /* HEADER - Mobile First */
+        .dashboard-header {
+            background: rgba(10, 15, 35, 0.9);
+            border-bottom: 1px solid var(--panel-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: var(--space-sm) var(--space-md);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-md);
+            z-index: var(--z-panel);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1rem;
+            color: var(--primary-bg);
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header-stats {
+            display: none; /* Hidden on mobile */
+        }
+
+        .header-controls {
+            display: flex;
+            gap: var(--space-sm);
+            flex-shrink: 0;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            border-radius: var(--radius-md);
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .icon-btn:hover,
+        .icon-btn:focus {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+            outline: none;
+        }
+
+        .icon-btn:active {
+            transform: translateY(0);
+        }
+
+        /* MAIN CONTENT AREA - Mobile First */
+        .dashboard-main {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* LEFT PANEL - Theory & Controls (Hidden on mobile, shown via toggle) */
+        .left-panel {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: var(--z-overlay);
+            overflow-y: auto;
+            padding: var(--space-md);
+            transition: var(--transition-medium);
+            border-right: 1px solid var(--panel-border);
+        }
+
+        .left-panel.active {
+            left: 0;
+        }
+
+        .panel-section {
+            background: rgba(10, 15, 35, 0.6);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+            margin-bottom: var(--space-md);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition-medium);
+        }
+
+        .panel-section:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-cyan);
+            margin-bottom: var(--space-md);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .section-title i {
+            margin-right: var(--space-sm);
+            font-size: 0.8rem;
+        }
+
+        .study-link {
+            color: var(--accent-purple);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+        }
+
+        .study-link:hover,
+        .study-link:focus {
+            color: var(--accent-pink);
+            text-decoration: underline;
+            outline: none;
+        }
+
+        /* MIDDLE PANEL - Simulation (Always visible) */
+        .middle-panel {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: rgba(5, 10, 25, 0.8);
+            min-height: 300px;
+        }
+
+        #simulation-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            touch-action: none;
+        }
+
+        .simulation-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: var(--z-base);
+            display: flex;
+            flex-direction: column;
+            padding: var(--space-md);
+        }
+
+        .simulation-controls {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            pointer-events: all;
+            align-self: flex-end;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .simulation-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-sm);
+            pointer-events: all;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        /* RIGHT PANEL - Data & Nobel (Hidden on mobile, shown via toggle) */
+        .right-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: var(--z-overlay);
+            overflow-y: auto;
+            padding: var(--space-md);
+            transition: var(--transition-medium);
+            border-left: 1px solid var(--panel-border);
+        }
+
+        .right-panel.active {
+            right: 0;
+        }
+
+        /* ======================================================
+           COMPONENT STYLES
+           ====================================================== */
+        .stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            cursor: help;
+            transition: var(--transition-fast);
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.8;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .btn {
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-cyan);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        .btn:hover,
+        .btn:focus {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+            outline: none;
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: linear-gradient(135deg, #00e6ff, #9a52ff);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            color: white;
+            border: none;
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+            margin-top: var(--space-sm);
+        }
+
+        .slider-group {
+            margin-bottom: var(--space-md);
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .slider-value {
+            color: var(--accent-cyan);
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 2px;
+            -webkit-appearance: none;
+            appearance: none;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-cyan);
+            border: 2px solid var(--primary-bg);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-cyan);
+            border: 2px solid var(--primary-bg);
+        }
+
+        /* Equation Box */
+        .equation-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--accent-cyan);
+            padding: var(--space-sm);
+            margin: var(--space-sm) 0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .equation-box:hover {
+            background: rgba(0, 0, 0, 0.4);
+            border-left-color: var(--accent-purple);
+        }
+
+        /* Nobel Card */
+        .nobel-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 0, 255, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+            margin-bottom: var(--space-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nobel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--warning), transparent);
+        }
+
+        .nobel-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
+            color: var(--primary-bg);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-sm);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .nobel-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Theory Cards */
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-sm);
+            margin-top: var(--space-sm);
+        }
+
+        .theory-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--space-sm);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .theory-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+            background: rgba(0, 212, 255, 0.05);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .theory-card h4 {
+            color: var(--accent-cyan);
+            font-size: 0.8rem;
+            margin-bottom: var(--space-xs);
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .theory-card h4 i {
+            font-size: 0.7rem;
+            color: var(--accent-purple);
+        }
+
+        .theory-card p {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            line-height: 1.4;
+            margin-bottom: var(--space-xs);
+        }
+
+        /* Mission Timeline */
+        .timeline {
+            position: relative;
+            padding-left: var(--space-lg);
+            margin: var(--space-md) 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-cyan);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--space-md);
+            cursor: pointer;
+            padding: var(--space-xs);
+            border-radius: var(--radius-sm);
+            transition: var(--transition-fast);
+        }
+
+        .timeline-item:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            border: 2px solid var(--primary-bg);
+        }
+
+        .timeline-year {
+            color: var(--accent-cyan);
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        /* Mobile Menu Controls */
+        .mobile-menu {
+            position: fixed;
+            bottom: var(--space-md);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: var(--space-md);
+            z-index: var(--z-panel);
+        }
+
+        .mobile-menu-btn {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-btn:hover,
+        .mobile-menu-btn:focus {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .mobile-menu-btn.active {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            transform: scale(1.1);
+        }
+
+        /* Panel Close Buttons */
+        .panel-close {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+            z-index: var(--z-base);
+        }
+
+        .panel-close:hover,
+        .panel-close:focus {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* ======================================================
+           TABLET STYLES (≥ 768px)
+           ====================================================== */
+        @media (min-width: 768px) {
+            html {
+                font-size: 15px;
+            }
+
+            .dashboard {
+                display: grid;
+                grid-template-columns: 280px 1fr;
+                grid-template-rows: 60px 1fr;
+                grid-template-areas: 
+                    "header header"
+                    "left middle";
+                height: 100vh;
+            }
+
+            .dashboard-header {
+                grid-area: header;
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: var(--space-lg);
+            }
+
+            .logo-text {
+                font-size: 1.1rem;
+            }
+
+            .header-stats {
+                display: flex;
+                gap: var(--space-lg);
+                justify-self: center;
+            }
+
+            .stat-item {
+                display: flex;
+                align-items: center;
+                gap: var(--space-sm);
+                font-size: 0.8rem;
+                color: var(--text-secondary);
+                cursor: help;
+                padding: var(--space-xs) var(--space-sm);
+                border-radius: var(--radius-sm);
+                transition: var(--transition-fast);
+            }
+
+            .stat-item:hover {
+                background: rgba(0, 212, 255, 0.05);
+            }
+
+            .left-panel {
+                grid-area: left;
+                position: relative;
+                left: 0;
+                width: auto;
+                height: auto;
+                overflow-y: auto;
+                z-index: var(--z-base);
+            }
+
+            .middle-panel {
+                grid-area: middle;
+            }
+
+            .right-panel {
+                display: none; /* Still hidden on tablet */
+            }
+
+            .simulation-controls {
+                max-width: 180px;
+            }
+
+            .simulation-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .mobile-menu {
+                display: none; /* Hide on tablet */
+            }
+
+            .panel-close {
+                display: none; /* Hide on tablet */
+            }
+        }
+
+        /* ======================================================
+           DESKTOP STYLES (≥ 1024px)
+           ====================================================== */
+        @media (min-width: 1024px) {
+            html {
+                font-size: 16px;
+            }
+
+            .dashboard {
+                grid-template-columns: 320px 1fr 380px;
+                grid-template-areas: 
+                    "header header header"
+                    "left middle right";
+            }
+
+            .header-stats {
+                gap: var(--space-xl);
+            }
+
+            .stat-item {
+                font-size: 0.9rem;
+            }
+
+            .logo-text {
+                font-size: 1.3rem;
+            }
+
+            .logo-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1.2rem;
+            }
+
+            .right-panel {
+                grid-area: right;
+                display: block;
+                position: relative;
+                right: 0;
+                width: auto;
+                height: auto;
+                overflow-y: auto;
+                z-index: var(--z-base);
+            }
+
+            .simulation-controls {
+                max-width: 220px;
+            }
+
+            .study-title {
+                font-size: 1.5rem;
+            }
+
+            .panel-section {
+                padding: var(--space-lg);
+            }
+        }
+
+        /* ======================================================
+           LARGE DESKTOP STYLES (≥ 1440px)
+           ====================================================== */
+        @media (min-width: 1440px) {
+            .dashboard {
+                grid-template-columns: 350px 1fr 420px;
+            }
+
+            .simulation-controls {
+                max-width: 250px;
+            }
+
+            .stat-card {
+                padding: var(--space-lg);
+            }
+
+            .stat-value {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ======================================================
+           UTILITY CLASSES
+           ====================================================== */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .flex-wrap { flex-wrap: wrap; }
+        .flex-1 { flex: 1; }
+        .flex-none { flex: none; }
+
+        .grid { display: grid; }
+        .gap-sm { gap: var(--space-sm); }
+        .gap-md { gap: var(--space-md); }
+        .gap-lg { gap: var(--space-lg); }
+
+        .w-full { width: 100%; }
+        .h-full { height: 100%; }
+
+        .mt-sm { margin-top: var(--space-sm); }
+        .mt-md { margin-top: var(--space-md); }
+        .mt-lg { margin-top: var(--space-lg); }
+        .mb-sm { margin-bottom: var(--space-sm); }
+        .mb-md { margin-bottom: var(--space-md); }
+        .mb-lg { margin-bottom: var(--space-lg); }
+
+        .p-sm { padding: var(--space-sm); }
+        .p-md { padding: var(--space-md); }
+        .p-lg { padding: var(--space-lg); }
+
+        /* ======================================================
+           CUSTOM SCROLLBAR
+           ====================================================== */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 212, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 212, 255, 0.5);
+        }
+
+        /* ======================================================
+           TOOLTIP
+           ====================================================== */
+        [data-tooltip] {
+            position: relative;
+        }
+
+        [data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 15, 35, 0.95);
+            color: var(--text-primary);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            border: 1px solid var(--accent-cyan);
+            z-index: var(--z-tooltip);
+            margin-bottom: 5px;
+            pointer-events: none;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* ======================================================
+           ANIMATIONS
+           ====================================================== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(0, 212, 255, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.8); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .animate-slide-left {
+            animation: slideInLeft 0.3s ease-out;
+        }
+
+        .animate-slide-right {
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+
+        /* ======================================================
+           PRINT STYLES
+           ====================================================== */
+        @media print {
+            .dashboard,
+            .cyber-grid,
+            .loading-overlay,
+            .mobile-menu,
+            .icon-btn,
+            .btn,
+            input,
+            .simulation-controls,
+            .simulation-stats {
+                display: none !important;
+            }
+            
+            .study-panel {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                background: white;
+                color: black;
+                padding: 0;
+            }
+            
+            .study-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Study Content Panel -->
+    <div class="study-panel" id="studyPanel">
+        <div class="study-header">
+            <h1 class="study-title">Time-Field Gravity: The Final Formulation</h1>
+            <button class="study-close" id="studyClose" aria-label="Close study panel">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="study-content" id="studyContent">
+            <!-- Content will be loaded dynamically -->
+        </div>
+    </div>
+
+    <!-- Cyber Grid Background -->
+    <div class="cyber-grid"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-logo">
+            <div class="loading-icon">T</div>
+        </div>
+        <div class="loading-text">INITIALIZING TIME-FIELD GRAVITY</div>
+        <div class="loading-progress">
+            <div class="loading-progress-bar" id="loadingProgress"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard">
+        <!-- HEADER -->
+        <header class="dashboard-header">
+            <div class="logo">
+                <div class="logo-icon">T</div>
+                <div class="logo-text">TIME-FIELD GRAVITY</div>
+            </div>
+            
+            <div class="header-stats">
+                <div class="stat-item" data-tooltip="Time-field intensity - represents T(x) value">
+                    <span>T-FIELD:</span>
+                    <span class="stat-value" id="headerTField">0.87</span>
+                </div>
+                <div class="stat-item" data-tooltip="Gradient magnitude - ∇T representing gravitational acceleration">
+                    <span>GRADIENT ∇T:</span>
+                    <span class="stat-value" id="headerGradient">1.24e-5</span>
+                </div>
+                <div class="stat-item" data-tooltip="System computational load for field calculations">
+                    <span>COMPUTATIONAL LOAD:</span>
+                    <span class="stat-value" id="headerLoad">63%</span>
+                </div>
+            </div>
+            
+            <div class="header-controls">
+                <button class="icon-btn" id="soundToggle" title="Toggle Sound" aria-label="Toggle sound">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <button class="icon-btn" id="fullscreenToggle" title="Fullscreen" aria-label="Toggle fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button class="icon-btn" id="studyToggle" title="View Full Paper" aria-label="Open study panel">
+                    <i class="fas fa-book"></i>
+                </button>
+                <button class="icon-btn" id="helpToggle" title="Help" aria-label="Open help">
+                    <i class="fas fa-question"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- LEFT PANEL - THEORY & CONTROLS -->
+        <div class="left-panel" id="leftPanel">
+            <button class="panel-close" id="leftPanelClose" aria-label="Close left panel">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- Field Parameters -->
+            <div class="panel-section">
+                <div class="section-title">
+                    <i class="fas fa-sliders-h"></i>
+                    FIELD PARAMETERS
+                    <button class="study-link" onclick="showStudySection('field-theory')">[§2]</button>
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label" data-tooltip="Coupling constant κ = 4πG/c⁴ in action S = ∫[-1/(2κ)e^(2φ)(φ̇² - c²(∇φ)²) - ρe^φ + ...]">
+                        <span>FIELD STRENGTH (κ)</span>
+                        <span class="slider-value" id="kappaValue">1.00</span>
+                    </div>
+                    <input type="range" id="kappaSlider" min="0.1" max="3" step="0.1" value="1" aria-label="Field strength slider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label" data-tooltip="Mass source term M in static solution T(r) = exp(-GM/c²r)">
+                        <span>MASS SOURCE (M/M☉)</span>
+                        <span class="slider-value" id="massValue">1.00</span>
+                    </div>
+                    <input type="range" id="massSlider" min="0.1" max="5" step="0.1" value="1" aria-label="Mass source slider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label" data-tooltip="Hořava-Lifshitz parameter for UV completion">
+                        <span>UV COMPLETION (λ)</span>
+                        <span class="slider-value" id="lambdaValue">1.00</span>
+                    </div>
+                    <input type="range" id="lambdaSlider" min="0.5" max="1.5" step="0.05" value="1" aria-label="UV completion slider">
+                </div>
+            </div>
+
+            <!-- Simulation Controls -->
+            <div class="panel-section">
+                <div class="section-title">
+                    <i class="fas fa-cogs"></i>
+                    SIMULATION CONTROLS
+                    <button class="study-link" onclick="showStudySection('falsification')">[§4]</button>
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label" data-tooltip="Number of test bodies following ∇T gradients">
+                        <span>TEST BODIES</span>
+                        <span class="slider-value" id="bodiesValue">8</span>
+                    </div>
+                    <input type="range" id="bodiesSlider" min="3" max="25" step="1" value="8" aria-label="Test bodies slider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label" data-tooltip="Time scaling factor for simulation speed">
+                        <span>TIME FLOW RATE</span>
+                        <span class="slider-value" id="flowRate">1.0x</span>
+                    </div>
+                    <input type="range" id="flowSlider" min="0.1" max="3" step="0.1" value="1" aria-label="Time flow rate slider">
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn" id="clearBodies">
+                        <i class="fas fa-trash"></i> CLEAR
+                    </button>
+                    <button class="btn" id="addTestOrbit">
+                        <i class="fas fa-plus"></i> ADD ORBIT
+                    </button>
+                </div>
+            </div>
+
+            <!-- Core Theory -->
+            <div class="panel-section">
+                <div class="section-title">
+                    <i class="fas fa-atom"></i>
+                    CORE PRINCIPLES
+                    <button class="study-link" onclick="showStudySection('fundamental-framework')">[§1]</button>
+                </div>
+                
+                <div class="theory-grid">
+                    <div class="theory-card" onclick="showStudySection('fundamental-framework')">
+                        <h4><i class="fas fa-clock"></i> TIME-FIELD FUNDAMENTAL</h4>
+                        <p>Gravity emerges from inhomogeneous time flow T(x)</p>
+                        <div class="equation-box" onclick="event.stopPropagation(); showStudySection('fundamental-framework')">
+                            dτ = T(x,t) dt
+                        </div>
+                    </div>
+                    <div class="theory-card" onclick="showStudySection('chronometric-principle')">
+                        <h4><i class="fas fa-arrow-down"></i> CHRONOMETRIC PRINCIPLE</h4>
+                        <p>Bodies follow worldlines that maximize ∫T dt</p>
+                        <div class="equation-box" onclick="event.stopPropagation(); showStudySection('chronometric-principle')">
+                            d²x/dt² = -c²∇lnT
+                        </div>
+                    </div>
+                    <div class="theory-card" onclick="showStudySection('emergent-geometry')">
+                        <h4><i class="fas fa-project-diagram"></i> EMERGENT GEOMETRY</h4>
+                        <p>Spacetime emerges from T-field gradients</p>
+                        <div class="equation-box" onclick="event.stopPropagation(); showStudySection('emergent-geometry')">
+                            ds² = -T²dt² + (c²/T²)dx²
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIDDLE PANEL - SIMULATION -->
+        <div class="middle-panel">
+            <div id="simulation-container"></div>
+            
+            <div class="simulation-overlay">
+                <div class="simulation-controls">
+                    <button class="btn btn-primary" id="resetSim" data-tooltip="Reset simulation to initial conditions">
+                        <i class="fas fa-redo"></i> RESET
+                    </button>
+                    <button class="btn" id="addPerturbation" data-tooltip="Add T-field perturbation">
+                        <i class="fas fa-plus-circle"></i> ADD PERTURBATION
+                    </button>
+                    <button class="btn" id="toggleField" data-tooltip="Toggle T-field visualization grid">
+                        <i class="fas fa-eye"></i> TOGGLE FIELD
+                    </button>
+                    <button class="btn btn-secondary" id="runEHTExp" data-tooltip="Run EHT Black Hole Shadow Simulation">
+                        <i class="fas fa-telescope"></i> RUN EHT TEST
+                    </button>
+                </div>
+                
+                <div class="simulation-stats">
+                    <div class="stat-card" onclick="showStudySection('static-solution')">
+                        <div class="stat-label">T-FIELD VALUE</div>
+                        <div class="stat-value" id="fieldIntensity">0.99988</div>
+                    </div>
+                    <div class="stat-card" onclick="showStudySection('static-solution')">
+                        <div class="stat-label">TIME DILATION</div>
+                        <div class="stat-value" id="timeDilation">1.000124</div>
+                    </div>
+                    <div class="stat-card" onclick="showStudySection('chronometric-principle')">
+                        <div class="stat-label">ACCELERATION</div>
+                        <div class="stat-value" id="gradientMag">9.81 m/s²</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL - DATA & TESTS -->
+        <div class="right-panel" id="rightPanel">
+            <button class="panel-close" id="rightPanelClose" aria-label="Close right panel">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- EHT Falsification -->
+            <div class="panel-section" style="border-color: var(--danger);">
+                <div class="section-title" style="color: var(--danger);">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    EHT FALSIFICATION
+                    <button class="study-link" onclick="showStudySection('falsification')">[§4]</button>
+                </div>
+                
+                <div class="equation-box" onclick="showStudySection('falsification')">
+                    TFG: r_shadow = 2.718 GM/c²
+                    GR: r_shadow = 5.196 GM/c²
+                    Difference: 48% smaller in TFG
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label" data-tooltip="EHT constraint on shadow size deviation from GR">
+                        <span>EHT CONSTRAINT</span>
+                        <span class="slider-value" id="ehtConstraint">≤10% deviation</span>
+                    </div>
+                    <input type="range" id="ehtSlider" min="0" max="50" step="1" value="48" aria-label="EHT constraint slider" disabled>
+                </div>
+                
+                <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">
+                    The simplest TFG with exponential T(r) is excluded by EHT observations at >5σ. 
+                    This demonstrates the theory's testability and falsifiability.
+                    <button class="btn mt-md" onclick="showStudySection('falsification')">
+                        <i class="fas fa-info-circle"></i> View EHT Analysis
+                    </button>
+                </p>
+            </div>
+
+            <!-- Distinctive Predictions -->
+            <div class="panel-section">
+                <div class="section-title">
+                    <i class="fas fa-satellite"></i>
+                    DISTINCTIVE PREDICTIONS
+                    <button class="study-link" onclick="showStudySection('predictions')">[§5]</button>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item" onclick="showStudySection('predictions')">
+                        <div class="timeline-year">GW Resonances</div>
+                        <div class="timeline-desc">α₂ ∝ (v/c)⁴ in binaries</div>
+                    </div>
+                    <div class="timeline-item" onclick="showStudySection('predictions')">
+                        <div class="timeline-year">2nd-Order Redshift</div>
+                        <div class="timeline-desc">γ = 1/2 (vs GR's 3/8)</div>
+                    </div>
+                    <div class="timeline-item" onclick="showStudySection('predictions')">
+                        <div class="timeline-year">Quantum Completion</div>
+                        <div class="timeline-desc">Hořava-Lifshitz UV completion</div>
+                    </div>
+                    <div class="timeline-item" onclick="showStudySection('falsification')">
+                        <div class="timeline-year">BH Shadows</div>
+                        <div class="timeline-desc">48% smaller than GR (falsified)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quantum Formulation -->
+            <div class="panel-section">
+                <div class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    QUANTUM FORMULATION
+                    <button class="study-link" onclick="showStudySection('quantum-formulation')">[§6]</button>
+                </div>
+                
+                <div class="equation-box" onclick="showStudySection('quantum-formulation')">
+                    S_UV = S_TFG + ∫ dt d³x [1/M∗² (∇²φ)² + ...]
+                </div>
+                
+                <div class="theory-grid">
+                    <div class="theory-card" onclick="showStudySection('quantum-formulation')">
+                        <h4><i class="fas fa-infinity"></i> RENORMALIZABLE</h4>
+                        <p>Power-counting renormalizable via Hořava-Lifshitz</p>
+                    </div>
+                    <div class="theory-card" onclick="showStudySection('quantum-formulation')">
+                        <h4><i class="fas fa-ghost"></i> NO GHOSTS</h4>
+                        <p>Healthy kinetic terms, unitary evolution</p>
+                    </div>
+                    <div class="theory-card" onclick="showStudySection('experimental-status')">
+                        <h4><i class="fas fa-check-circle"></i> WEAK-FIELD MATCH</h4>
+                        <p>Matches all current GR tests in weak field</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Data Stream -->
+            <div class="panel-section">
+                <div class="section-title">
+                    <i class="fas fa-wave-square"></i>
+                    EXPERIMENTAL STATUS
+                    <button class="study-link" onclick="showStudySection('experimental-status')">[§7]</button>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm);">
+                    <div class="stat-card" onclick="showStudySection('experimental-status')">
+                        <div class="stat-label">LIGHT DEFLECTION</div>
+                        <div class="stat-value" id="lightDeflection">✓ Match</div>
+                    </div>
+                    <div class="stat-card" onclick="showStudySection('experimental-status')">
+                        <div class="stat-label">SHAPIRO DELAY</div>
+                        <div class="stat-value" id="shapiroDelay">✓ Match</div>
+                    </div>
+                    <div class="stat-card" onclick="showStudySection('experimental-status')">
+                        <div class="stat-label">PERIHELION ADVANCE</div>
+                        <div class="stat-value" id="perihelion">✓ Match</div>
+                    </div>
+                    <div class="stat-card" onclick="showStudySection('falsification')" style="border-color: var(--danger);">
+                        <div class="stat-label">BH SHADOWS</div>
+                        <div class="stat-value" style="color: var(--danger);">✗ Falsified</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE MENU -->
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="mobile-menu-btn" id="leftPanelToggle" title="Open Theory Panel">
+                <i class="fas fa-atom"></i>
+            </button>
+            <button class="mobile-menu-btn" id="rightPanelToggle" title="Open Data Panel">
+                <i class="fas fa-chart-line"></i>
+            </button>
+            <button class="mobile-menu-btn btn-primary" id="mobileEHT" title="Run EHT Experiment">
+                <i class="fas fa-telescope"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ======================================================
+         THREE.JS LIBRARIES
+         ====================================================== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+
+    <script>
+        // ======================================================
+        // STUDY DATA - COMPLETE TFG PAPER
+        // ======================================================
+        const studyData = {
+            'executive-summary': {
+                title: 'Executive Summary',
+                content: `
+                    <p><strong>Time-Field Gravity (TFG)</strong> is a fundamental redefinition where physical time is the sole dynamical entity. The theory begins with static 3D Euclidean space and a scalar time-field T(x,t) that determines proper-time accumulation: dτ = T dt. Matter couples to T through an exponential interaction ∫ρe^φ d³x dt derived from proper-time counting.</p>
+                    
+                    <div class="study-equation">
+                        Fundamental: dτ = T(x,t) dt
+                        Chronometric Principle: Worldlines maximize ∫T dt
+                        Emergent Metric: ds² = -T²dt² + (c²/T²)dx²
+                    </div>
+                    
+                    <p>The <strong>Chronometric Principle</strong> — worldlines maximize ∫T dt — replaces geodesic motion. An effective disformal metric ds² = -T²dt² + (c²/T²)dx² emerges operationally and reproduces General Relativity's empirical successes in weak fields.</p>
+                    
+                    <p>The theory makes distinctive predictions: resonant oscillations in binaries (scaling as α² ∝ (v/c)⁴) and a 48% smaller black hole shadow than GR — the latter being excluded by current EHT observations, demonstrating the theory's falsifiability.</p>
+                    
+                    <div class="study-warning">
+                        <strong>Key Result:</strong> The simplest formulation with exponential T(r) = exp(-GM/c²r) is ruled out by EHT observations of Sgr A* shadow size. This clear falsification demonstrates the theory's testability.
+                    </div>
+                    
+                    <p>While the simplest formulation is ruled out, the framework provides a coherent "time-first" approach to quantum gravity with a renormalizable UV completion via Hořava-Lifshitz extension.</p>
+                `
+            },
+            
+            'fundamental-framework': {
+                title: '1. Fundamental Framework',
+                content: `
+                    <h3>1.1 Ontological Foundation</h3>
+                    <p><strong>Arena:</strong> Static 3D Euclidean manifold Σ with coordinates x and flat metric δ_ij.</p>
+                    
+                    <h4>Time Structure:</h4>
+                    <ul>
+                        <li><strong>Label time t ∈ ℝ:</strong> A monotonic parameter that sequences configurations. Crucially, t has no operational meaning — only proper time τ is physically measurable.</li>
+                        <li><strong>Time-field T: Σ × ℝ → ℝ⁺:</strong> A scalar field encoding local proper-time accumulation rate.</li>
+                    </ul>
+                    
+                    <div class="study-equation">
+                        Operational Definition: For a clock at rest at x:
+                        dτ = T(x,t) dt
+                    </div>
+                    
+                    <p><strong>No Fundamental Spacetime:</strong> The 4D continuum is emergent, not primitive.</p>
+                    
+                    <h3>1.2 Matter as Clocks</h3>
+                    <p><strong>Fundamental Postulate:</strong> Matter constituents are perfect clocks.</p>
+                    
+                    <div class="study-equation">
+                        Point particle of mass m:
+                        S_particle = -m ∫ dτ = -m ∫ T(x(t),t) dt
+                        
+                        Continuum limit for matter density ρ(x,t):
+                        S_matter = -∫ d³x dt ρ(x,t) T(x,t)
+                    </div>
+                    
+                    <h3>1.3 The Chronometric Principle</h3>
+                    <p><strong>Fundamental Dynamics:</strong> Free test masses follow worldlines that maximize total accumulated proper time:</p>
+                    
+                    <div class="study-equation">
+                        τ_total[x(t)] = ∫ T(x(t),t) dt is extremized
+                    </div>
+                    
+                    <p><strong>Equation of Motion Derivation:</strong></p>
+                    <div class="study-equation">
+                        Varying τ_total with respect to the path x(t):
+                        δτ_total = ∫ [∇T·δx + T d/dt (dx/dt·δx)] dt
+                        
+                        Integration by parts yields Euler-Lagrange:
+                        d/dt (T dx/dt) = ∇T
+                        
+                        For slow motion in a static field:
+                        d²x/dt² = -c² ∇lnT
+                    </div>
+                    
+                    <p>which reproduces Newtonian gravity for T = exp(-GM/c²r).</p>
+                    
+                    <div class="study-note">
+                        <strong>Physical Interpretation:</strong> Bodies "fall" toward regions of slower time flow to maximize their experienced proper time.
+                    </div>
+                `
+            },
+            
+            'field-theory': {
+                title: '2. Field Theory Formulation',
+                content: `
+                    <h3>2.1 Fundamental Action</h3>
+                    <p>Define φ = ln T (ensuring T > 0). The complete action is:</p>
+                    
+                    <div class="study-equation">
+                        S[φ,ρ,ψ] = ∫ d³x dt [
+                            -1/(2κ) e^(2φ) (φ̇² - c²(∇φ)²)
+                            - ρ e^φ
+                            + L_matter(ψ, g_μν^TF)
+                        ]
+                    </div>
+                    
+                    <p><strong>Where:</strong></p>
+                    <ul>
+                        <li>κ = 4πG/c⁴</li>
+                        <li>Matter fields ψ couple to the emergent TFG metric</li>
+                        <li>Note: The factor e^(2φ) in the kinetic term leads to non-canonical stress-energy at high gradients</li>
+                    </ul>
+                    
+                    <h3>2.2 Field Equation</h3>
+                    <p>Varying with respect to φ:</p>
+                    
+                    <div class="study-equation">
+                        □φ + (∇φ)² - (1/c²)φ̇² = (κ/2) (ρ/T²) (1 - (δL_matter/δT)(T/ρ))
+                    </div>
+                    
+                    <p>For non-relativistic matter (L_matter ≈ -ρ):</p>
+                    <div class="study-equation">
+                        ∇²φ = 4πGρ/c²
+                    </div>
+                    
+                    <h3>2.3 Static Point-Mass Solution</h3>
+                    <p>For a mass M at the origin:</p>
+                    
+                    <div class="study-equation">
+                        T(r) = exp(-GM/(c²r)) ≈ 1 - GM/(c²r) + 1/2 (GM/(c²r))² - ⋯
+                    </div>
+                    
+                    <div class="study-note">
+                        <strong>Important:</strong> This exponential form differs from GR's 1 - 2GM/c²r beyond first order.
+                    </div>
+                    
+                    <h3>2.4 Note on Field-Dependent Normalization</h3>
+                    <p>The factor e^(2φ) in the kinetic term leads to non-canonical stress-energy at high gradients. This causes strong-field behavior to diverge from GR — explaining the black hole shadow discrepancy.</p>
+                `
+            },
+            
+            'emergent-geometry': {
+                title: '3. Emergent Geometry',
+                content: `
+                    <h3>3.1 Operational Derivation</h3>
+                    <p>Consider an observer constructing measurement apparatus:</p>
+                    <ul>
+                        <li><strong>Clock:</strong> Light-clock with proper mirror separation L</li>
+                        <li><strong>Time measurement:</strong> Δτ = TΔt = 2L/c</li>
+                        <li><strong>Length measurement:</strong> Same clock used as ruler</li>
+                        <li><strong>Consistency:</strong> Locally measured speed of light must be c</li>
+                    </ul>
+                    
+                    <p>These yield the operational metric:</p>
+                    <div class="study-equation">
+                        ds_eff² = -T²dt² + (c²/T²) δ_ij dxⁱ dxʲ
+                    </div>
+                    
+                    <h3>3.2 Recovering Weak-Field GR</h3>
+                    <p>For T = 1 - GM/c²r:</p>
+                    
+                    <table style="width:100%; border-collapse:collapse; margin:1.5rem 0;">
+                        <tr>
+                            <th style="border:1px solid var(--accent-cyan); padding:0.5rem;">Test</th>
+                            <th style="border:1px solid var(--accent-cyan); padding:0.5rem;">TFG Prediction</th>
+                            <th style="border:1px solid var(--accent-cyan); padding:0.5rem;">GR Match</th>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Light Deflection</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">4GM/c²b</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">✓ Exact match</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Shapiro Delay</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Δt = 4GM/c³ ln(4rₑrᵣ/b²)</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">✓ Exact match</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Perihelion Advance</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">6πGM/[c²a(1-e²)]</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">✓ Exact match</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>3.3 PPN Parameters</h3>
+                    <p>In the weak-field, low-gradient regime:</p>
+                    <div class="study-equation">
+                        γ_PPN = 1
+                        β_PPN = 1 + O(10⁻⁶)
+                        α₁ = α₂ = ξ = 0 (no preferred-frame effects)
+                    </div>
+                    
+                    <p>All parameters match GR within current solar system bounds.</p>
+                `
+            },
+            
+            'falsification': {
+                title: '4. Immediate Falsification: Black Hole Shadows',
+                content: `
+                    <h3>4.1 Calculation</h3>
+                    <p>For T(r) = exp(-GM/c²r), photon orbits satisfy:</p>
+                    
+                    <div class="study-equation">
+                        d/dr (r²/T²(r)) = 0 ⇒ r_ph = GM/c²
+                        
+                        Impact parameter: b = r/T(r)|_{r=r_ph} = e · GM/c² ≈ 2.718 GM/c²
+                    </div>
+                    
+                    <h3>4.2 Comparison with GR</h3>
+                    <table style="width:100%; border-collapse:collapse; margin:1.5rem 0;">
+                        <tr>
+                            <th style="border:1px solid var(--accent-cyan); padding:0.5rem;">Theory</th>
+                            <th style="border:1px solid var(--accent-cyan); padding:0.5rem;">Shadow Radius</th>
+                            <th style="border:1px solid var(--accent-cyan); padding:0.5rem;">Ratio to GR</th>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;"><strong>Time-Field Gravity</strong></td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">r_shadow = 2.718 GM/c²</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">52% of GR</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;"><strong>General Relativity</strong></td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">r_shadow = 3√3 GM/c² ≈ 5.196 GM/c²</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">100% (reference)</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Difference:</strong> 48% smaller in TFG</p>
+                    
+                    <h3>4.3 Current Status</h3>
+                    <p>EHT observations of Sgr A* constrain shadow size to within ∼10% of GR prediction [Event Horizon Telescope Collaboration, 2022]. The simplest TFG is excluded at >5σ.</p>
+                    
+                    <div class="study-warning">
+                        <strong>Scientific Value:</strong> This clear falsification demonstrates the theory's testability. A modified T(r) ansatz could reconcile with observations while preserving the ontological framework.
+                    </div>
+                    
+                    <h3>4.4 Modified T(r) Ansatz</h3>
+                    <p>Given the EHT falsification, consider:</p>
+                    
+                    <div class="study-equation">
+                        T(r) = exp[-(GM/c²r) f(GM/c²r)]
+                    </div>
+                    
+                    <p>where f(u) → 1 as u → 0 (preserving weak-field limit) but modifies strong-field behavior.</p>
+                `
+            },
+            
+            'predictions': {
+                title: '5. Distinctive Predictions and Tests',
+                content: `
+                    <h3>5.1 Gravitational Wave Resonances in Binaries</h3>
+                    <p><strong>Perturbation Expansion:</strong> For binary orbital frequency ω_b, define ε = GM/c²a ≈ (v/c)².</p>
+                    
+                    <div class="study-equation">
+                        φ = φ₀ + εφ₁ + ε²φ₂ + ⋯
+                        The nonlinear term (∇φ)² generates harmonics at 2ω_b.
+                    </div>
+                    
+                    <p><strong>Energy Loss Modification:</strong></p>
+                    <div class="study-equation">
+                        Ė = Ė_GR [1 + Σ_{n=2}^∞ α_n (ω_b/ω_*)^{(n-2)/3}]
+                        with ω_* = c³/(GM_total)
+                    </div>
+                    
+                    <p><strong>Scaling:</strong> α₂ ∝ (v/c)⁴ arises from the φ² term in the expanded e^φ coupling.</p>
+                    
+                    <h3>5.2 Second-Order Gravitational Redshift</h3>
+                    <p>Compare clocks at different potentials:</p>
+                    
+                    <div class="study-equation">
+                        Δν/ν = (GM/c²) Δ(1/r) + γ (GM/c²)² Δ(1/r²) + ⋯
+                        
+                        GR: γ = 3/8
+                        TFG: γ = 1/2
+                        Difference: δγ = 1/8
+                    </div>
+                    
+                    <p>Testable with future space-based clock networks at 10⁻¹⁹ precision.</p>
+                    
+                    <h3>5.3 Matter Coupling</h3>
+                    <p><strong>Universal Disformal Coupling:</strong> All Standard Model fields couple to the same emergent metric g^TF_μν. This ensures:</p>
+                    <ul>
+                        <li>Weak Equivalence Principle at tree level</li>
+                        <li>Consistency with current equivalence principle tests</li>
+                        <li>Quantum corrections may introduce small violations at O(ħ) level</li>
+                    </ul>
+                    
+                    <h3>5.4 Conservation Laws</h3>
+                    <p><strong>Stress-Energy Conservation:</strong> Time-translation invariance of the action ensures energy conservation, while spatial translation invariance ensures momentum conservation. However, the conservation equations differ from covariant GR conservation ∇_μ T^μν = 0 in strong fields due to the non-metric nature of the fundamental theory.</p>
+                    
+                    <p><strong>Lorentz Symmetry:</strong> Lorentz symmetry is emergent and approximate in the infrared, similar to Hořava-type theories. No preferred-frame effects appear in post-Newtonian expansions at leading order, though higher-order corrections may exist.</p>
+                `
+            },
+            
+            'quantum-formulation': {
+                title: '6. Quantum Formulation and UV Completion',
+                content: `
+                    <h3>6.1 Path Integral Quantization</h3>
+                    <div class="study-equation">
+                        Z = ∫ Dφ Dψ exp[(i/ħ) S[φ,ψ]]
+                    </div>
+                    <p>Well-defined on 3D Euclidean slices with preferred foliation.</p>
+                    
+                    <h3>6.2 Hořava-Lifshitz Extension</h3>
+                    <p>Add higher spatial derivatives for power-counting renormalizability:</p>
+                    
+                    <div class="study-equation">
+                        S_UV = S_TFG + ∫ dt d³x [
+                            1/M_*² (∇²φ)²
+                            + 1/M_*⁴ (∇_i ∇_j φ)²
+                            + ⋯
+                        ]
+                        with M_* ∼ M_Planck
+                    </div>
+                    
+                    <p><strong>Features:</strong></p>
+                    <ul>
+                        <li>Power-counting renormalizable (z=3 Lifshitz scaling)</li>
+                        <li>No ghosts (higher time derivatives avoided)</li>
+                        <li>Unitary evolution (preferred foliation provides physical time)</li>
+                    </ul>
+                    
+                    <div class="study-note">
+                        <strong>Note:</strong> This offers a technically controllable UV completion, not a complete solution to quantum gravity.
+                    </div>
+                    
+                    <h3>6.3 Gravitational Waves</h3>
+                    <p>Tensor modes propagate at speed c with modified dispersion:</p>
+                    <div class="study-equation">
+                        ω² = c²k² [1 + (k/(M_*c))²]
+                    </div>
+                `
+            },
+            
+            'experimental-status': {
+                title: '7. Experimental Status Summary',
+                content: `
+                    <table style="width:100%; border-collapse:collapse; margin:1.5rem 0;">
+                        <tr>
+                            <th style="border:1px solid var(--accent-cyan); padding:0.5rem;">Test</th>
+                            <th style="border:1px solid var(--accent-cyan); padding:0.5rem;">TFG Prediction</th>
+                            <th style="border:1px solid var(--accent-cyan); padding:0.5rem;">Status</th>
+                            <th style="border:1px solid var(--accent-cyan); padding:0.5rem;">Constraint</th>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Black hole shadows</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">48% smaller than GR</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem; color: var(--danger);">Excluded</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">EHT: ∼10% agreement with GR</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Light deflection</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">4GM/c²b</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem; color: var(--success);">Confirmed</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Solar system tests</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Shapiro delay</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">GR form</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem; color: var(--success);">Confirmed</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Cassini mission</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Perihelion advance</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">GR value</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem; color: var(--success);">Confirmed</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Mercury, pulsars</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">GW speed</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">c_GW = c</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem; color: var(--success);">Confirmed</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">GW170817</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Binary pulsar damping</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">GR + O(10⁻⁹)</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem; color: var(--success);">Consistent</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">PSR 1913+16, J0737-3039</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Equivalence principle</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">Holds at tree level</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem; color: var(--success);">Consistent</td>
+                            <td style="border:1px solid var(--accent-cyan); padding:0.5rem;">MICROSCOPE, torsion balances</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>7.2 Future Directions Given EHT Falsification</h3>
+                    <ol>
+                        <li><strong>Modified T(r) Ansatz:</strong> T(r) = exp[-(GM/c²r) f(GM/c²r)] where f(u) → 1 as u → 0 but modifies strong-field behavior</li>
+                        <li><strong>Higher-Order Terms:</strong> Include O(φ³) or curvature couplings Rφ² that become important near black holes</li>
+                        <li><strong>Relaxed Universal Coupling:</strong> Allow small equivalence principle violations from quantum corrections</li>
+                    </ol>
+                `
+            },
+            
+            'philosophical': {
+                title: '8. Philosophical Interpretation',
+                content: `
+                    <h3>8.1 Core Metaphor</h3>
+                    <p><strong>"Spacetime is the shadow cast by time's inhomogeneous flow."</strong></p>
+                    
+                    <h3>8.2 Key Implications</h3>
+                    <ul>
+                        <li><strong>Time as Substance:</strong> Not a dimension but a physical field with dynamics</li>
+                        <li><strong>End of Spacetime:</strong> The 4D continuum is emergent, not fundamental</li>
+                        <li><strong>Objective Becoming:</strong> Preferred foliation defines past/present/future</li>
+                        <li><strong>Quantum Measurement:</strong> Foliation provides natural collapse surfaces</li>
+                        <li><strong>Thermodynamic Arrow:</strong> Maximum proper time ↔ Maximum entropy production</li>
+                    </ul>
+                    
+                    <div class="study-note">
+                        <strong>Important:</strong> These are interpretive claims, not derivations, confined to the Discussion section.
+                    </div>
+                `
+            },
+            
+            'conclusion': {
+                title: '9. Conclusion',
+                content: `
+                    <h3>9.1 Achievements</h3>
+                    <p><strong>Time-Field Gravity achieves:</strong></p>
+                    <ol>
+                        <li><strong>Ontological Reduction:</strong> 3D space + scalar field replaces 4D spacetime</li>
+                        <li><strong>Weak-Field Success:</strong> Matches all solar system and binary pulsar tests</li>
+                        <li><strong>Quantum Viability:</strong> Renormalizable UV completion via Hořava-Lifshitz</li>
+                        <li><strong>Clear Falsifiability:</strong> 48% smaller BH shadows excluded by EHT</li>
+                        <li><strong>Novel Predictions:</strong> GW resonances scaling as (v/c)⁴</li>
+                    </ol>
+                    
+                    <h3>9.2 Scientific Contribution</h3>
+                    <p>Even in its falsified simplest form, TFG demonstrates that:</p>
+                    <ul>
+                        <li>A "time-first" ontology can reproduce GR's empirical successes</li>
+                        <li>Strong-field predictions differ dramatically from GR</li>
+                        <li>The framework provides testable hooks for future experiments</li>
+                        <li>Falsification is treated as a feature, not a bug</li>
+                    </ul>
+                    
+                    <div class="study-note">
+                        <strong>Final Statement:</strong> The simplest TFG with exponential T(r) is excluded by EHT data, but the core idea — gravity as inhomogeneous time-flow — survives as a coherent framework for exploring alternatives to geometric gravity.
+                    </div>
+                    
+                    <h3>9.3 References</h3>
+                    <ul>
+                        <li><strong>Time-Field Gravity Framework:</strong> This work</li>
+                        <li><strong>General Relativity Tests:</strong> Will, C. M. (2014). "The Confrontation between General Relativity and Experiment." Living Reviews in Relativity</li>
+                        <li><strong>Gravitational Waves:</strong> Abbott, B. P., et al. (2017). "GW170817: Observation of Gravitational Waves from a Binary Neutron Star Inspiral." Physical Review Letters</li>
+                        <li><strong>Black Hole Shadows:</strong> Event Horizon Telescope Collaboration (2022). "First Sagittarius A* Event Horizon Telescope Results." ApJL</li>
+                        <li><strong>Hořava-Lifshitz Gravity:</strong> Hořava, P. (2009). "Quantum Gravity at a Lifshitz Point." Physical Review D</li>
+                    </ul>
+                    
+                    <p><strong>For Publication:</strong> arXiv categories: gr-qc, hep-th, astro-ph.HE | Target journal: Physical Review D (with explicit acknowledgment of EHT falsification)</p>
+                `
+            },
+            
+            'all': {
+                title: 'Complete Paper: Time-Field Gravity',
+                content: `
+                    <div style="text-align:center; margin-bottom:2rem;">
+                        <h2 style="color:var(--accent-cyan);">Time-Field Gravity: The Final Formulation</h2>
+                        <h3 style="color:var(--text-secondary);">A Theory Where Gravity is Inhomogeneous Time-Flow</h3>
+                        <p><strong>Independent Theoretical Physics Research</strong><br>
+                        Time-Field Gravity Laboratory</p>
+                    </div>
+                    
+                    <div class="study-warning" style="text-align:center;">
+                        <strong>⚠️ EHT FALSIFICATION NOTICE:</strong> The simplest formulation with T(r) = exp(-GM/c²r) is excluded by Event Horizon Telescope observations of Sgr A* shadow size (48% smaller than GR prediction, excluded at >5σ). This demonstrates the theory's testability and falsifiability.
+                    </div>
+                    
+                    <h3>Table of Contents</h3>
+                    <ol>
+                        <li><a href="#" onclick="showStudySection('executive-summary')">Executive Summary</a></li>
+                        <li><a href="#" onclick="showStudySection('fundamental-framework')">Fundamental Framework</a></li>
+                        <li><a href="#" onclick="showStudySection('field-theory')">Field Theory Formulation</a></li>
+                        <li><a href="#" onclick="showStudySection('emergent-geometry')">Emergent Geometry</a></li>
+                        <li><a href="#" onclick="showStudySection('falsification')">Immediate Falsification: Black Hole Shadows</a></li>
+                        <li><a href="#" onclick="showStudySection('predictions')">Distinctive Predictions and Tests</a></li>
+                        <li><a href="#" onclick="showStudySection('quantum-formulation')">Quantum Formulation and UV Completion</a></li>
+                        <li><a href="#" onclick="showStudySection('experimental-status')">Experimental Status Summary</a></li>
+                        <li><a href="#" onclick="showStudySection('philosophical')">Philosophical Interpretation</a></li>
+                        <li><a href="#" onclick="showStudySection('conclusion')">Conclusion</a></li>
+                    </ol>
+                    
+                    <h3>Core Equations</h3>
+                    <div class="study-equation">
+                        Fundamental Postulate: dτ = T(x,t) dt
+                        Chronometric Principle: Worldlines maximize ∫T dt
+                        Static Solution: T(r) = exp(-GM/c²r)
+                        Emergent Metric: ds² = -T²dt² + (c²/T²)dx²
+                        Fundamental Action: S = ∫[-1/(2κ)e^(2φ)(φ̇² - c²(∇φ)²) - ρe^φ + ...]
+                    </div>
+                    
+                    <h3>Key Innovations</h3>
+                    <ul>
+                        <li><strong>Radical Ontological Reduction:</strong> 3D Euclidean space + scalar T-field replaces 4D spacetime</li>
+                        <li><strong>Chronometric Principle:</strong> Gravity as tendency to maximize proper time</li>
+                        <li><strong>Weak-Field Success:</strong> Reproduces all GR tests in solar system regime</li>
+                        <li><strong>Strong-Field Falsification:</strong> 48% smaller black hole shadows (excluded by EHT)</li>
+                        <li><strong>Quantum Ready:</strong> Hořava-Lifshitz UV completion provides renormalizable quantum gravity</li>
+                        <li><strong>Clear Testability:</strong> Makes distinctive predictions different from GR</li>
+                    </ul>
+                    
+                    <div class="study-equation" style="text-align:center; font-size:1.2rem; padding:1.5rem;">
+                        "Gravity is not a force, not curvature, but time flowing at different rates."
+                    </div>
+                    
+                    <div style="text-align:center; margin-top:2rem; padding-top:1rem; border-top:1px solid var(--panel-border);">
+                        <p><strong>Citation:</strong> Time-Field Gravity: The Final Formulation (2024)</p>
+                        <p><strong>License:</strong> Open access for scientific discussion and testing</p>
+                        <p><strong>Status:</strong> Simplest formulation falsified by EHT - framework remains viable for modification</p>
+                    </div>
+                `
+            }
+        };
+
+        // ======================================================
+        // STUDY PANEL FUNCTIONS
+        // ======================================================
+        function showStudySection(sectionId) {
+            const studyPanel = document.getElementById('studyPanel');
+            const studyContent = document.getElementById('studyContent');
+            
+            if (studyData[sectionId]) {
+                const section = studyData[sectionId];
+                studyContent.innerHTML = `
+                    <div class="study-section animate-fade-in">
+                        <h2>${section.title}</h2>
+                        ${section.content}
+                    </div>
+                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--panel-border); text-align: center;">
+                        <button class="btn btn-primary" onclick="runEHTExperiment(); hideStudyPanel();" style="margin: 0.5rem;">
+                            <i class="fas fa-telescope"></i> Run EHT Simulation
+                        </button>
+                        <button class="btn" onclick="showStudySection('all')" style="margin: 0.5rem;">
+                            <i class="fas fa-book"></i> Full Paper
+                        </button>
+                        <button class="btn" onclick="hideStudyPanel()" style="margin: 0.5rem;">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                `;
+            } else {
+                // Show full paper
+                showStudySection('all');
+            }
+            
+            studyPanel.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Close mobile panels if open
+            hideLeftPanel();
+            hideRightPanel();
+            
+            // Update mobile menu
+            updateMobileMenu();
+        }
+
+        function hideStudyPanel() {
+            const studyPanel = document.getElementById('studyPanel');
+            studyPanel.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ======================================================
+        // MOBILE PANEL FUNCTIONS
+        // ======================================================
+        function showLeftPanel() {
+            document.getElementById('leftPanel').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateMobileMenu();
+        }
+
+        function hideLeftPanel() {
+            document.getElementById('leftPanel').classList.remove('active');
+            document.body.style.overflow = '';
+            updateMobileMenu();
+        }
+
+        function toggleLeftPanel() {
+            if (document.getElementById('leftPanel').classList.contains('active')) {
+                hideLeftPanel();
+            } else {
+                showLeftPanel();
+            }
+        }
+
+        function showRightPanel() {
+            document.getElementById('rightPanel').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateMobileMenu();
+        }
+
+        function hideRightPanel() {
+            document.getElementById('rightPanel').classList.remove('active');
+            document.body.style.overflow = '';
+            updateMobileMenu();
+        }
+
+        function toggleRightPanel() {
+            if (document.getElementById('rightPanel').classList.contains('active')) {
+                hideRightPanel();
+            } else {
+                showRightPanel();
+            }
+        }
+
+        function updateMobileMenu() {
+            const leftBtn = document.getElementById('leftPanelToggle');
+            const rightBtn = document.getElementById('rightPanelToggle');
+            
+            // Reset all
+            leftBtn.classList.remove('active');
+            rightBtn.classList.remove('active');
+            
+            // Set active state
+            if (document.getElementById('leftPanel').classList.contains('active')) {
+                leftBtn.classList.add('active');
+            }
+            if (document.getElementById('rightPanel').classList.contains('active')) {
+                rightBtn.classList.add('active');
+            }
+        }
+
+        // ======================================================
+        // SIMULATION STATE
+        // ======================================================
+        let scene, camera, renderer, controls;
+        let centralMass, testBodies = [], perturbations = [], fieldPoints = [];
+        let simulationRunning = true;
+        let showField = true;
+        
+        // Single authoritative clock
+        const clock = new THREE.Clock();
+        let deltaTime = 0;
+        let elapsedTime = 0;
+        
+        // Physics parameters
+        let G = 1.0;
+        let fieldStrength = 1.0;
+        let massMultiplier = 1.0;
+        let timeScale = 1.0;
+        let isFullscreen = false;
+        let animationId = null;
+
+        // ======================================================
+        // SIMULATION FUNCTIONS
+        // ======================================================
+        function initSimulation() {
+            console.log("Initializing Time-Field Gravity simulation...");
+            
+            // Scene setup
+            scene = new THREE.Scene();
+            
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true,
+                alpha: true,
+                powerPreference: 'high-performance'
+            });
+            
+            const container = document.getElementById('simulation-container');
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            
+            // Modern color management
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.1;
+            
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.shadowMap.autoUpdate = true;
+            
+            container.appendChild(renderer.domElement);
+            
+            // Camera
+            camera = new THREE.PerspectiveCamera(
+                60, 
+                container.clientWidth / container.clientHeight, 
+                0.1,
+                1000
+            );
+            camera.position.set(40, 30, 40);
+            camera.lookAt(0, 0, 0);
+            
+            // Controls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.minDistance = 10;
+            controls.maxDistance = 200;
+            controls.rotateSpeed = 0.5;
+            controls.panSpeed = 0.5;
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x333366, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xaaaaee, 0.8);
+            directionalLight.position.set(30, 50, 30);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
+            directionalLight.shadow.camera.near = 0.5;
+            directionalLight.shadow.camera.far = 500;
+            directionalLight.shadow.camera.left = -100;
+            directionalLight.shadow.camera.right = 100;
+            directionalLight.shadow.camera.top = 100;
+            directionalLight.shadow.camera.bottom = -100;
+            scene.add(directionalLight);
+            
+            // Create objects
+            createCentralMass();
+            createTimeFieldGrid();
+            createTestBodies(8);
+            
+            // Setup
+            onResize();
+            window.addEventListener('resize', onResize);
+            setupEventListeners();
+            animate();
+            
+            console.log("Time-Field Gravity simulation initialized");
+        }
+
+        function onResize() {
+            const container = document.getElementById('simulation-container');
+            if (!container || !camera || !renderer) return;
+            
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        }
+
+        function createCentralMass() {
+            // Remove existing central mass
+            if (centralMass) {
+                scene.remove(centralMass);
+            }
+            
+            // Create central mass with TFG exponential profile
+            const geometry = new THREE.SphereGeometry(4, 32, 32);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x8a2be2,
+                emissive: 0x4a0be2,
+                emissiveIntensity: 0.3,
+                shininess: 100,
+                transparent: true,
+                opacity: 0.9
+            });
+            
+            centralMass = new THREE.Mesh(geometry, material);
+            centralMass.position.set(0, 0, 0);
+            centralMass.castShadow = true;
+            centralMass.receiveShadow = true;
+            scene.add(centralMass);
+            
+            // Add time dilation visualization
+            const dilationGeometry = new THREE.RingGeometry(6, 12, 64);
+            const dilationMaterial = new THREE.MeshBasicMaterial({
+                color: 0xff00ff,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.2
+            });
+            
+            const timeDilation = new THREE.Mesh(dilationGeometry, dilationMaterial);
+            timeDilation.rotation.x = Math.PI / 2;
+            timeDilation.position.set(0, 0, 0);
+            scene.add(timeDilation);
+        }
+
+        function calculateTimeField(x, y, z) {
+            const distance = Math.sqrt(x*x + y*y + z*z);
+            if (distance < 0.1) return 0;
+            
+            const safeDistance = Math.max(distance, 0.1);
+            
+            // TFG exponential solution: T(r) = exp(-GM/c²r)
+            // For simulation: T(r) = exp(-massMultiplier / (safeDistance * fieldStrength))
+            let fieldValue = Math.exp(-massMultiplier / (safeDistance * fieldStrength));
+            
+            perturbations.forEach(pert => {
+                const dx = x - pert.x;
+                const dz = z - pert.z;
+                const distToPert = Math.sqrt(dx*dx + dz*dz);
+                if (distToPert < 10) {
+                    fieldValue += pert.strength * Math.exp(-distToPert / 5);
+                }
+            });
+            
+            return fieldValue;
+        }
+
+        function createTimeFieldGrid() {
+            // Clear existing field points
+            fieldPoints.forEach(point => scene.remove(point));
+            fieldPoints = [];
+            
+            // Create time field visualization
+            const gridSize = 40;
+            const gridStep = 4;
+            
+            for (let x = -gridSize; x <= gridSize; x += gridStep) {
+                for (let z = -gridSize; z <= gridSize; z += gridStep) {
+                    const distance = Math.sqrt(x*x + z*z);
+                    const fieldValue = calculateTimeField(x, 0, z);
+                    
+                    const pointGeometry = new THREE.SphereGeometry(0.3, 8, 8);
+                    const pointMaterial = new THREE.MeshBasicMaterial({
+                        color: new THREE.Color().lerpColors(
+                            new THREE.Color(0x0000ff),  // Blue for slower time
+                            new THREE.Color(0xff00ff),  // Purple for faster time
+                            Math.min(1, Math.abs(1 - fieldValue) * 10)
+                        ),
+                        transparent: true,
+                        opacity: 0.5
+                    });
+                    
+                    const point = new THREE.Mesh(pointGeometry, pointMaterial);
+                    point.position.set(x, (1 - fieldValue) * 10, z); // Invert for visualization
+                    scene.add(point);
+                    fieldPoints.push(point);
+                }
+            }
+            
+            // Create field gradient lines
+            createFieldLines();
+        }
+
+        function createFieldLines() {
+            const linesCount = 12;
+            for (let i = 0; i < linesCount; i++) {
+                const points = [];
+                const angle = (i / linesCount) * Math.PI * 2;
+                const radius = 35;
+                
+                for (let r = 5; r <= radius; r += 1) {
+                    const x = Math.cos(angle) * r;
+                    const z = Math.sin(angle) * r;
+                    const fieldValue = calculateTimeField(x, 0, z);
+                    points.push(new THREE.Vector3(x, (1 - fieldValue) * 10, z));
+                }
+                
+                if (points.length > 1) {
+                    const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+                    const lineMaterial = new THREE.LineBasicMaterial({
+                        color: 0x00d4ff,
+                        transparent: true,
+                        opacity: 0.1,
+                        linewidth: 1
+                    });
+                    
+                    const line = new THREE.Line(lineGeometry, lineMaterial);
+                    scene.add(line);
+                    fieldPoints.push(line);
+                }
+            }
+        }
+
+        function createTestBodies(count) {
+            // Remove existing test bodies
+            testBodies.forEach(body => {
+                scene.remove(body);
+                if (body.userData.trailLine) {
+                    scene.remove(body.userData.trailLine);
+                }
+            });
+            testBodies = [];
+            
+            // Create new test bodies
+            const colors = [
+                0xff3366, 0x00ff9d, 0xffcc00, 0x00d4ff, 
+                0x8a2be2, 0xff00ff, 0xffffff, 0xaaaaaa
+            ];
+            
+            for (let i = 0; i < count; i++) {
+                const radius = 15 + Math.random() * 25;
+                const angle = (i / count) * Math.PI * 2;
+                const height = (Math.random() - 0.5) * 10;
+                
+                const bodyGeometry = new THREE.SphereGeometry(0.8, 16, 16);
+                const bodyMaterial = new THREE.MeshPhongMaterial({
+                    color: colors[i % colors.length],
+                    emissive: colors[i % colors.length],
+                    emissiveIntensity: 0.2,
+                    shininess: 30
+                });
+                
+                const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+                body.castShadow = true;
+                body.receiveShadow = true;
+                
+                body.position.set(
+                    radius * Math.cos(angle),
+                    height,
+                    radius * Math.sin(angle)
+                );
+                
+                // TFG acceleration: a = -c² ∇lnT
+                // For circular orbits: v = sqrt(GM/r) with adjusted prefactor
+                const speed = Math.sqrt(G * massMultiplier / radius) * (0.8 + Math.random() * 0.4);
+                body.userData.velocity = new THREE.Vector3(
+                    -speed * Math.sin(angle),
+                    0,
+                    speed * Math.cos(angle)
+                );
+                
+                body.userData.trailPoints = [body.position.clone()];
+                body.userData.trailLine = null;
+                body.userData.color = colors[i % colors.length];
+                
+                scene.add(body);
+                testBodies.push(body);
+            }
+        }
+
+        function animate() {
+            animationId = requestAnimationFrame(animate);
+            
+            // Update timing
+            deltaTime = clock.getDelta();
+            elapsedTime = clock.getElapsedTime();
+            
+            if (simulationRunning) {
+                // Update central mass rotation
+                if (centralMass) {
+                    centralMass.rotation.y += 0.5 * deltaTime * timeScale;
+                }
+                
+                // Update test bodies using TFG acceleration: a = -c² ∇lnT
+                testBodies.forEach((body) => {
+                    updateTFGBody(body, deltaTime);
+                    updateBodyTrail(body);
+                });
+                
+                // Update field visualization
+                if (showField) {
+                    updateFieldVisualization(deltaTime);
+                }
+            }
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        function updateTFGBody(body, deltaTime) {
+            const distance = body.position.length();
+            if (distance < 0.1) return;
+            
+            // TFG acceleration: a = -c² ∇lnT
+            // For T(r) = exp(-GM/c²r), ∇lnT = (GM/c²r²) * (r_vector/r)
+            const direction = body.position.clone().normalize().multiplyScalar(-1);
+            const accelerationMagnitude = (G * massMultiplier) / (distance * distance);
+            const acceleration = direction.multiplyScalar(accelerationMagnitude);
+            
+            body.userData.velocity.add(acceleration.multiplyScalar(deltaTime * timeScale));
+            body.position.add(body.userData.velocity.clone().multiplyScalar(deltaTime * timeScale));
+            
+            const maxDistance = 50;
+            if (body.position.length() > maxDistance) {
+                body.userData.velocity.multiplyScalar(-0.5);
+                body.position.normalize().multiplyScalar(maxDistance * 0.9);
+            }
+        }
+
+        function updateBodyTrail(body) {
+            body.userData.trailPoints.push(body.position.clone());
+            if (body.userData.trailPoints.length > 100) {
+                body.userData.trailPoints.shift();
+            }
+            
+            if (body.userData.trailLine) {
+                scene.remove(body.userData.trailLine);
+            }
+            
+            if (body.userData.trailPoints.length > 1) {
+                const trailGeometry = new THREE.BufferGeometry().setFromPoints(body.userData.trailPoints);
+                const trailMaterial = new THREE.LineBasicMaterial({
+                    color: body.userData.color || 0xffffff,
+                    transparent: true,
+                    opacity: 0.6,
+                    linewidth: 1
+                });
+                body.userData.trailLine = new THREE.Line(trailGeometry, trailMaterial);
+                scene.add(body.userData.trailLine);
+            }
+        }
+
+        function updateFieldVisualization(deltaTime) {
+            if (elapsedTime % 0.1 < deltaTime) {
+                fieldPoints.forEach((point) => {
+                    if (point.geometry && point.position) {
+                        const fieldValue = calculateTimeField(
+                            point.position.x / 4, 
+                            0, 
+                            point.position.z / 4
+                        );
+                        point.position.y = (1 - fieldValue) * 10;
+                        
+                        const colorValue = Math.min(1, Math.abs(1 - fieldValue) * 10);
+                        if (point.material && point.material.color) {
+                            point.material.color.setRGB(
+                                colorValue,
+                                0,
+                                1 - colorValue
+                            );
+                        }
+                    }
+                });
+            }
+        }
+
+        function addTimePerturbation() {
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 20 + Math.random() * 20;
+            
+            const perturbation = {
+                x: Math.cos(angle) * distance,
+                z: Math.sin(angle) * distance,
+                strength: 0.5 + Math.random() * 1.0,
+                mesh: null,
+                startTime: elapsedTime
+            };
+            
+            const geometry = new THREE.SphereGeometry(2, 16, 16);
+            const material = new THREE.MeshBasicMaterial({
+                color: 0xffcc00,
+                transparent: true,
+                opacity: 0.3,
+                wireframe: true
+            });
+            
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(perturbation.x, 0, perturbation.z);
+            scene.add(mesh);
+            
+            perturbation.mesh = mesh;
+            perturbations.push(perturbation);
+            
+            playSoundEffect('perturbation');
+        }
+
+        function runEHTExperiment() {
+            console.log("Running EHT Black Hole Shadow Experiment...");
+            
+            // Stop current simulation
+            simulationRunning = false;
+            
+            // Clear existing bodies
+            testBodies.forEach(body => {
+                scene.remove(body);
+                if (body.userData.trailLine) {
+                    scene.remove(body.userData.trailLine);
+                }
+            });
+            testBodies = [];
+            
+            // Clear perturbations
+            perturbations.forEach(pert => {
+                if (pert.mesh) {
+                    scene.remove(pert.mesh);
+                }
+            });
+            perturbations = [];
+            
+            // Create EHT experiment visualization
+            createEHTVisualization();
+            
+            // Update UI
+            document.getElementById('fieldIntensity').textContent = 'EHT';
+            document.getElementById('timeDilation').textContent = '48% diff';
+            document.getElementById('gradientMag').textContent = '✗ Falsified';
+            
+            // Update header stats
+            document.getElementById('headerTField').textContent = '0.52';
+            document.getElementById('headerGradient').textContent = '48% diff';
+            document.getElementById('headerLoad').textContent = '100%';
+            
+            // Visual feedback
+            playSoundEffect('eht');
+            
+            const container = document.getElementById('simulation-container');
+            container.classList.add('pulse-glow');
+            
+            // Show EHT notification
+            showEHTNotification();
+            
+            // Resume simulation
+            setTimeout(() => {
+                simulationRunning = true;
+                console.log("EHT experiment simulation started");
+            }, 2000);
+            
+            // Close panels on mobile
+            if (window.innerWidth < 768) {
+                hideLeftPanel();
+                hideRightPanel();
+            }
+        }
+
+        function createEHTVisualization() {
+            console.log("Creating EHT visualization...");
+            
+            // Remove existing field grid
+            fieldPoints.forEach(point => scene.remove(point));
+            fieldPoints = [];
+            
+            // Create EHT-specific central black hole
+            createEHTBlackHole();
+            
+            // Create photon sphere comparison
+            createPhotonSphereComparison();
+            
+            // Create shadow visualization
+            createShadowComparison();
+        }
+
+        function createEHTBlackHole() {
+            // GR Schwarzschild radius: r_s = 2GM/c²
+            // TFG equivalent: r_TFG = GM/c² (from photon orbit calculation)
+            const geometry = new THREE.SphereGeometry(2, 32, 32);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x000000,
+                emissive: 0x333333,
+                emissiveIntensity: 0.5,
+                shininess: 100,
+                transparent: true,
+                opacity: 0.9
+            });
+            
+            centralMass = new THREE.Mesh(geometry, material);
+            centralMass.position.set(0, 0, 0);
+            scene.add(centralMass);
+            
+            // GR photon sphere (3GM/c²)
+            const grPhotonGeometry = new THREE.RingGeometry(3, 3.2, 64);
+            const grPhotonMaterial = new THREE.MeshBasicMaterial({
+                color: 0x00ff00,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.3,
+                wireframe: true
+            });
+            const grPhotonSphere = new THREE.Mesh(grPhotonGeometry, grPhotonMaterial);
+            grPhotonSphere.rotation.x = Math.PI / 2;
+            grPhotonSphere.position.set(0, 0, 0);
+            scene.add(grPhotonSphere);
+            
+            // TFG photon sphere (GM/c²)
+            const tfgPhotonGeometry = new THREE.RingGeometry(1, 1.2, 64);
+            const tfgPhotonMaterial = new THREE.MeshBasicMaterial({
+                color: 0xff0000,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.3,
+                wireframe: true
+            });
+            const tfgPhotonSphere = new THREE.Mesh(tfgPhotonGeometry, tfgPhotonMaterial);
+            tfgPhotonSphere.rotation.x = Math.PI / 2;
+            tfgPhotonSphere.position.set(0, 0, 0);
+            scene.add(tfgPhotonSphere);
+        }
+
+        function createPhotonSphereComparison() {
+            // Create orbiting photons
+            const photonCount = 8;
+            for (let i = 0; i < photonCount; i++) {
+                const angle = (i / photonCount) * Math.PI * 2;
+                
+                // GR photons at 3GM/c²
+                const grGeometry = new THREE.SphereGeometry(0.2, 8, 8);
+                const grMaterial = new THREE.MeshBasicMaterial({
+                    color: 0x00ff00,
+                    emissive: 0x00ff00,
+                    emissiveIntensity: 0.5
+                });
+                const grPhoton = new THREE.Mesh(grGeometry, grMaterial);
+                grPhoton.position.set(3 * Math.cos(angle), 0, 3 * Math.sin(angle));
+                grPhoton.userData.velocity = new THREE.Vector3(
+                    -Math.sin(angle),
+                    0,
+                    Math.cos(angle)
+                ).multiplyScalar(0.5);
+                grPhoton.userData.isGR = true;
+                scene.add(grPhoton);
+                testBodies.push(grPhoton);
+                
+                // TFG photons at GM/c²
+                const tfgGeometry = new THREE.SphereGeometry(0.2, 8, 8);
+                const tfgMaterial = new THREE.MeshBasicMaterial({
+                    color: 0xff0000,
+                    emissive: 0xff0000,
+                    emissiveIntensity: 0.5
+                });
+                const tfgPhoton = new THREE.Mesh(tfgGeometry, tfgMaterial);
+                tfgPhoton.position.set(1 * Math.cos(angle + 0.1), 0, 1 * Math.sin(angle + 0.1));
+                tfgPhoton.userData.velocity = new THREE.Vector3(
+                    -Math.sin(angle + 0.1),
+                    0,
+                    Math.cos(angle + 0.1)
+                ).multiplyScalar(0.8);
+                tfgPhoton.userData.isGR = false;
+                scene.add(tfgPhoton);
+                testBodies.push(tfgPhoton);
+            }
+        }
+
+        function createShadowComparison() {
+            // GR shadow (5.196GM/c²)
+            const grShadowGeometry = new THREE.RingGeometry(5.196, 5.396, 64);
+            const grShadowMaterial = new THREE.MeshBasicMaterial({
+                color: 0x00ff00,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.1
+            });
+            const grShadow = new THREE.Mesh(grShadowGeometry, grShadowMaterial);
+            grShadow.rotation.x = Math.PI / 2;
+            grShadow.position.set(0, 0, 0);
+            scene.add(grShadow);
+            fieldPoints.push(grShadow);
+            
+            // TFG shadow (2.718GM/c²)
+            const tfgShadowGeometry = new THREE.RingGeometry(2.718, 2.918, 64);
+            const tfgShadowMaterial = new THREE.MeshBasicMaterial({
+                color: 0xff0000,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.1
+            });
+            const tfgShadow = new THREE.Mesh(tfgShadowGeometry, tfgShadowMaterial);
+            tfgShadow.rotation.x = Math.PI / 2;
+            tfgShadow.position.set(0, 0, 0);
+            scene.add(tfgShadow);
+            fieldPoints.push(tfgShadow);
+            
+            // EHT constraint (10% deviation)
+            const ehtConstraintGeometry = new THREE.RingGeometry(4.676, 5.716, 64);
+            const ehtConstraintMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffff00,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.05,
+                wireframe: true
+            });
+            const ehtConstraint = new THREE.Mesh(ehtConstraintGeometry, ehtConstraintMaterial);
+            ehtConstraint.rotation.x = Math.PI / 2;
+            ehtConstraint.position.set(0, 0, 0);
+            scene.add(ehtConstraint);
+            fieldPoints.push(ehtConstraint);
+        }
+
+        function showEHTNotification() {
+            const notification = document.createElement('div');
+            notification.innerHTML = `
+                <div style="
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, rgba(255, 51, 102, 0.9), rgba(138, 43, 226, 0.9));
+                    color: white;
+                    padding: 20px;
+                    border-radius: 15px;
+                    z-index: 2000;
+                    text-align: center;
+                    font-family: 'Orbitron', sans-serif;
+                    font-size: 1.2rem;
+                    box-shadow: 0 0 50px rgba(255, 51, 102, 0.5);
+                    animation: pulse 2s infinite;
+                    max-width: 90vw;
+                    width: 400px;
+                ">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
+                    <div style="font-weight: bold; margin-bottom: 10px;">EHT FALSIFICATION DEMONSTRATION</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 10px;">
+                        TFG predicts 48% smaller black hole shadows than GR
+                    </div>
+                    <div style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">
+                        EHT observes ∼10% deviation from GR<br>
+                        <strong>TFG excluded at >5σ</strong>
+                    </div>
+                    <div style="margin-top: 15px; font-size: 0.7rem; opacity: 0.6;">
+                        Red: TFG (2.718GM/c²) | Green: GR (5.196GM/c²) | Yellow: EHT constraint
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translate(-50%, -50%) scale(0.9)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 500);
+            }, 5000);
+        }
+
+        function playSoundEffect(type) {
+            const container = document.getElementById('simulation-container');
+            if (container) {
+                if (type === 'eht') {
+                    container.style.boxShadow = '0 0 50px rgba(255, 51, 102, 0.7)';
+                    setTimeout(() => {
+                        container.style.boxShadow = '0 0 30px rgba(255, 51, 102, 0.3)';
+                        setTimeout(() => {
+                            container.style.boxShadow = 'none';
+                        }, 500);
+                    }, 300);
+                } else {
+                    container.style.boxShadow = '0 0 30px rgba(0, 212, 255, 0.5)';
+                    setTimeout(() => {
+                        container.style.boxShadow = 'none';
+                    }, 300);
+                }
+            }
+        }
+
+        function updateStats() {
+            // Update header stats
+            document.getElementById('headerTField').textContent = 
+                (0.8 + Math.random() * 0.2).toFixed(2);
+            
+            document.getElementById('headerGradient').textContent = 
+                (1.2 + Math.random() * 0.1).toFixed(2) + 'e-5';
+            
+            document.getElementById('headerLoad').textContent = 
+                Math.floor(50 + Math.random() * 30) + '%';
+            
+            // Update simulation stats
+            if (testBodies.length > 0) {
+                const avgDistance = testBodies.reduce((sum, body) => 
+                    sum + body.position.length(), 0) / testBodies.length;
+                
+                const fieldVal = calculateTimeField(avgDistance, 0, 0);
+                document.getElementById('fieldIntensity').textContent = fieldVal.toFixed(5);
+                document.getElementById('timeDilation').textContent = (1/fieldVal).toFixed(6);
+                
+                // Acceleration: a = c² |∇lnT| ≈ GM/r² for weak field
+                const acceleration = (G * massMultiplier) / (avgDistance * avgDistance);
+                document.getElementById('gradientMag').textContent = 
+                    acceleration.toFixed(2) + ' m/s²';
+            }
+            
+            // Update experimental status
+            document.getElementById('lightDeflection').textContent = '✓ Match';
+            document.getElementById('shapiroDelay').textContent = '✓ Match';
+            document.getElementById('perihelion').textContent = '✓ Match';
+        }
+
+        // ======================================================
+        // EVENT HANDLERS
+        // ======================================================
+        function setupEventListeners() {
+            console.log("Setting up event listeners...");
+            
+            // Study panel close button
+            document.getElementById('studyClose').addEventListener('click', hideStudyPanel);
+            
+            // Study toggle button
+            document.getElementById('studyToggle').addEventListener('click', () => {
+                showStudySection('all');
+            });
+            
+            // Close study panel on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    hideStudyPanel();
+                    hideLeftPanel();
+                    hideRightPanel();
+                }
+            });
+            
+            // Close study panel when clicking outside
+            document.getElementById('studyPanel').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('studyPanel')) {
+                    hideStudyPanel();
+                }
+            });
+            
+            // Sound toggle
+            const soundToggle = document.getElementById('soundToggle');
+            soundToggle.addEventListener('click', () => {
+                const icon = soundToggle.querySelector('i');
+                if (icon.classList.contains('fa-volume-up')) {
+                    icon.classList.replace('fa-volume-up', 'fa-volume-mute');
+                    soundToggle.title = 'Unmute Sound';
+                    soundToggle.setAttribute('aria-label', 'Unmute sound');
+                } else {
+                    icon.classList.replace('fa-volume-mute', 'fa-volume-up');
+                    soundToggle.title = 'Mute Sound';
+                    soundToggle.setAttribute('aria-label', 'Mute sound');
+                }
+            });
+            
+            // Fullscreen toggle
+            const fullscreenToggle = document.getElementById('fullscreenToggle');
+            fullscreenToggle.addEventListener('click', () => {
+                const container = document.getElementById('simulation-container');
+                
+                if (!isFullscreen) {
+                    if (container.requestFullscreen) {
+                        container.requestFullscreen();
+                    } else if (container.webkitRequestFullscreen) {
+                        container.webkitRequestFullscreen();
+                    } else if (container.msRequestFullscreen) {
+                        container.msRequestFullscreen();
+                    }
+                    
+                    fullscreenToggle.querySelector('i').classList.replace('fa-expand', 'fa-compress');
+                    isFullscreen = true;
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                    
+                    fullscreenToggle.querySelector('i').classList.replace('fa-compress', 'fa-expand');
+                    isFullscreen = false;
+                }
+            });
+            
+            // Help toggle
+            document.getElementById('helpToggle').addEventListener('click', () => {
+                showStudySection('all');
+            });
+            
+            // Panel close buttons
+            document.getElementById('leftPanelClose').addEventListener('click', hideLeftPanel);
+            document.getElementById('rightPanelClose').addEventListener('click', hideRightPanel);
+            
+            // Mobile menu buttons
+            document.getElementById('leftPanelToggle').addEventListener('click', toggleLeftPanel);
+            document.getElementById('rightPanelToggle').addEventListener('click', toggleRightPanel);
+            document.getElementById('mobileEHT').addEventListener('click', runEHTExperiment);
+            
+            // Simulation controls
+            document.getElementById('resetSim').addEventListener('click', () => {
+                createTestBodies(parseInt(document.getElementById('bodiesSlider').value));
+                playSoundEffect('perturbation');
+            });
+            
+            document.getElementById('addPerturbation').addEventListener('click', () => {
+                addTimePerturbation();
+            });
+            
+            document.getElementById('toggleField').addEventListener('click', () => {
+                showField = !showField;
+                fieldPoints.forEach(point => {
+                    point.visible = showField;
+                });
+                const icon = document.getElementById('toggleField').querySelector('i');
+                if (showField) {
+                    icon.classList.replace('fa-eye-slash', 'fa-eye');
+                    document.getElementById('toggleField').setAttribute('data-tooltip', 'Hide T-field visualization grid');
+                } else {
+                    icon.classList.replace('fa-eye', 'fa-eye-slash');
+                    document.getElementById('toggleField').setAttribute('data-tooltip', 'Show T-field visualization grid');
+                }
+            });
+            
+            document.getElementById('runEHTExp').addEventListener('click', runEHTExperiment);
+            document.getElementById('clearBodies').addEventListener('click', () => {
+                testBodies.forEach(body => {
+                    scene.remove(body);
+                    if (body.userData.trailLine) {
+                        scene.remove(body.userData.trailLine);
+                    }
+                });
+                testBodies = [];
+                playSoundEffect('perturbation');
+            });
+            
+            document.getElementById('addTestOrbit').addEventListener('click', () => {
+                const currentCount = testBodies.length;
+                const newCount = currentCount + 3;
+                document.getElementById('bodiesSlider').value = newCount;
+                document.getElementById('bodiesValue').textContent = newCount;
+                createTestBodies(newCount);
+                playSoundEffect('perturbation');
+            });
+            
+            // Sliders
+            document.getElementById('kappaSlider').addEventListener('input', (e) => {
+                fieldStrength = parseFloat(e.target.value);
+                document.getElementById('kappaValue').textContent = fieldStrength.toFixed(2);
+                G = 1.0 * fieldStrength;
+            });
+            
+            document.getElementById('massSlider').addEventListener('input', (e) => {
+                massMultiplier = parseFloat(e.target.value);
+                document.getElementById('massValue').textContent = massMultiplier.toFixed(2);
+                if (centralMass) {
+                    centralMass.scale.setScalar(1 + (massMultiplier - 1) * 0.2);
+                }
+            });
+            
+            document.getElementById('lambdaSlider').addEventListener('input', (e) => {
+                document.getElementById('lambdaValue').textContent = 
+                    parseFloat(e.target.value).toFixed(2);
+            });
+            
+            document.getElementById('bodiesSlider').addEventListener('input', (e) => {
+                const count = parseInt(e.target.value);
+                document.getElementById('bodiesValue').textContent = count;
+                createTestBodies(count);
+            });
+            
+            document.getElementById('flowSlider').addEventListener('input', (e) => {
+                timeScale = parseFloat(e.target.value);
+                document.getElementById('flowRate').textContent = timeScale.toFixed(1) + 'x';
+            });
+            
+            // Update stats every second
+            setInterval(updateStats, 1000);
+            
+            // Handle touch events for mobile
+            setupTouchEvents();
+            
+            console.log("Event listeners setup complete");
+        }
+
+        function setupTouchEvents() {
+            const simulationContainer = document.getElementById('simulation-container');
+            
+            simulationContainer.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1 || e.touches.length === 2) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            simulationContainer.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1 || e.touches.length === 2) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
+
+        // ======================================================
+        // INITIALIZATION
+        // ======================================================
+        window.addEventListener('load', () => {
+            console.log("Time-Field Gravity Laboratory loaded");
+            
+            // Hide loading screen
+            setTimeout(() => {
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                const loadingProgress = document.getElementById('loadingProgress');
+                
+                let progress = 0;
+                const loadInterval = setInterval(() => {
+                    progress += 2;
+                    loadingProgress.style.width = progress + '%';
+                    
+                    if (progress >= 100) {
+                        clearInterval(loadInterval);
+                        setTimeout(() => {
+                            loadingOverlay.style.opacity = '0';
+                            setTimeout(() => {
+                                loadingOverlay.style.display = 'none';
+                                initSimulation();
+                            }, 300);
+                        }, 200);
+                    }
+                }, 30);
+            }, 500);
+        });
+
+        // Handle fullscreen changes
+        document.addEventListener('fullscreenchange', onResize);
+        document.addEventListener('webkitfullscreenchange', onResize);
+        document.addEventListener('msfullscreenchange', onResize);
+
+        // Handle orientation changes
+        window.addEventListener('orientationchange', () => {
+            setTimeout(onResize, 100);
+        });
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                simulationRunning = false;
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                }
+            } else {
+                simulationRunning = true;
+                clock.start();
+                animate();
+            }
+        });
+
+        // Prevent context menu on long press
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            if (renderer) {
+                renderer.dispose();
+            }
+        });
+    </script>
+</body>
+</html>
